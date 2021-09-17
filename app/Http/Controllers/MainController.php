@@ -31,10 +31,10 @@ class MainController extends Controller
     {
         if (session('tag_id')) {
             $tag = Tag::find(session('tag_id'));
-            $articles = $tag->articles()->paginate(10);
+            $articles = $tag->articles()->orderBy('created_at', 'DESC')->paginate(9);
         }
         else {
-            $articles = Article::paginate(10);
+            $articles = Article::orderBy('created_at', 'DESC')->paginate(9);
         }
         return view('articles.index')
             ->witharticles($articles);
@@ -51,6 +51,7 @@ class MainController extends Controller
         try {
             $article = Article::findOrFail($id);
             $tags = $article->tags;
+            $comments = $article->comments;
         }
         catch(ModelNotFoundException $exception) {
             $article = [
@@ -60,6 +61,7 @@ class MainController extends Controller
 
         return view('articles.view')
             ->witharticle($article)
+            ->withcomments($comments)
             ->withtags($tags);
     }
 
@@ -73,10 +75,8 @@ class MainController extends Controller
             'subject' => 'required|min:3',
             'body' => 'required|min:3'
         ]);
-        Comment::create($request->all());
-        return [
-            'result' => 'Ваше сообщение успешно отправлено'
-        ];
+        $comment = Comment::create($request->all());
+        return $comment;
     }
 
     /**

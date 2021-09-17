@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-primary sticky-top mb-3">
+<nav class="navbar navbar-expand-lg navbar-light bg-info sticky-top mb-3">
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item">

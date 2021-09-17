@@ -34,10 +34,14 @@ $(document).ready(function(){
             type: "POST",
             data: postData,
             success: function(data, textStatus, jqXHR) {
-                console.log(data)
-                $('.comment .card-header').html(data.result)
-                $('.comment .card-header').addClass('bg-success')
-                $('.comment .card-body').remove()
+                let card = $('#comment').clone()
+                card.children('.card-header').append(data.subject)
+                card.children('.card-body').append(data.body)
+                let small = document.createElement('small')
+                $(small).html(data.date).appendTo(card.children('.card-footer').addClass('text-right'))
+                $('#comments').append(card.fadeIn())
+                $('#theme').val('')
+                $('#text').val('')
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 $.each(jqXHR.responseJSON.errors, function(key,value) {
@@ -72,7 +76,7 @@ $(document).ready(function(){
                 $('.badge-light').html(data.likes)
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                alert('Ошибка')
+                alert('Error')
             }
         });
     })
@@ -94,7 +98,7 @@ $(document).ready(function(){
                 _token: token
             },
             success: function(data, textStatus, jqXHR) {
-                $('.view').html('Просмотров ' + data.views)
+                $('.view').html('Views ' + data.views)
             },
             error: function(jqXHR, textStatus, errorThrown) {
             }

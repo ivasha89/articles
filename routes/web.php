@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
     Route::get('/', 'MainController@index');
     Route::get('/articles', 'MainController@showList')->name('articles');
-    Route::get('/articles/{id}', 'MainController@show');
+    Route::get('/article/{id}', 'MainController@show');
     Route::post('/comment', 'MainController@addComment');
     Route::post('/like', 'MainController@likeArticle');
     Route::post('/view', 'MainController@viewArticle');
